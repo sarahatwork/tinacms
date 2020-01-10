@@ -17,15 +17,10 @@ limitations under the License.
 */
 
 import * as React from 'react'
-import { Field, Form } from '@tinacms/core'
+import { Field, Form } from '@tinacms/forms'
 import styled, { css } from 'styled-components'
 import { FieldsBuilder } from '@tinacms/form-builder'
-import {
-  color,
-  font,
-  radius,
-  IconButton,
-} from '@tinacms/styles'
+import { color, font, radius, IconButton } from '@tinacms/styles'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import {
   AddIcon,
@@ -72,12 +67,7 @@ interface GroupProps {
   tinaForm: Form
 }
 
-const Group = function Group({
-  tinaForm,
-  form,
-  field,
-  input,
-}: GroupProps) {
+const Group = function Group({ tinaForm, form, field, input }: GroupProps) {
   const addItem = React.useCallback(() => {
     let obj = {}
     if (typeof field.defaultItem === 'function') {
@@ -108,7 +98,7 @@ const Group = function Group({
       <GroupListPanel>
         <ItemList>
           <Droppable droppableId={field.name} type={field.name}>
-            {(provider) => (
+            {provider => (
               <div ref={provider.innerRef}>
                 {items.length === 0 && <EmptyState />}
                 {items.map((item: any, index: any) => (
@@ -143,7 +133,7 @@ interface ItemProps {
 const Item = ({ tinaForm, field, index, item, label, ...p }: ItemProps) => {
   const [isExpanded, setExpanded] = React.useState<boolean>(false)
   const removeItem = React.useCallback(() => {
-    tinaForm.finalForm.mutators.remove(field.name, index)
+    tinaForm.mutators.remove(field.name, index)
   }, [tinaForm, field, index])
   const title = label || (field.label || field.name) + ' Item'
   return (
